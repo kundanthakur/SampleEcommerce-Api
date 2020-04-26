@@ -1,0 +1,146 @@
+Project name : SampleEcommerce
+
+Technology :- java,spring boot,jpa,mysql,jws,spring security,aws s3(to store product images).
+postman :  https://www.getpostman.com/collections/62b02a46ef84c50f6931
+deployed in : aws ec2
+database Info :- 
+               host url :- den1.mysql2.gear.host
+			   username :- samplecommerce
+			   password :- Bl7T5?-H4o8b
+			   
+Note :- The web Application is deployed on aws (linux ) Environment , all api's are live ,you can hit api's please go throgh the api's instruction.		   
+
+
+
+Application Summary :- 
+
+	this web-application consist of 14 api's  ,5 api's for  end user who will use the application and other's api's for manage the web-application.
+	For better exprience for end user pagination is used for retrieving data. 
+	we can  retrieve product with multiple sorting and searching ways with  pagination .
+	This application is store's product images on AWS(s3).
+	
+	to use application please go through the api instruction:-
+	
+
+
+
+Admin :-
+	to manage product we need to create user, to create user go throgh the (/AddUser ) API  . 
+	once user created we need to login on web-application to get acess-token for further use for login go throgh the (/loginuser ) API  .
+
+product information :-
+
+   this application is storing (category,subcategory,size,name,origprice,offerprice,longdescription,image ) these information for any product .
+   for better processing in this application image are saved on aws s3.
+ 
+Add product :-
+
+   to add any product we need acess-token as we generate earlier on call of login api,use that token to call  AddyourProduct,edityourProduct,deactiveyourproduct,activateproduct,deleteproduct
+   these api to manage product.
+   
+End user :-
+
+   End user have only access to view product and place order.
+
+
+instruction to use api :-
+
+
+
+For end user's:-
+
+
+		get all product page wise one page consist 8 data.
+
+				url : http://13.127.192.85/getproductpage/0
+				pathvariable : {page no starting from 0}
+
+
+		get  product categorywise with pagination one page consist 8 data.
+
+				url : http://13.127.192.85/getproductbycategory/{category}/0
+				pathvariable :{category name}/ {page no starting from 0}
+
+
+		get  product category,sub category  with pagination one page consist 8 data.
+
+				url : http://13.127.192.85/getproductbycatsubcat/{category}/{sub category}/0
+				pathvariable :{category name}/{sub-category name}/ {page no starting from 0}
+
+
+		get  product by keywords  with pagination one page consist 8 data.
+
+				url : http://13.127.233.86/searchtext/{searchable keywords}/0
+				pathvariable :{text to be search }/ {page no starting from 0}
+
+
+		place your order :-
+
+				url : http://13.127.233.86/placeyourorders
+				Request body : {"listofitems":{ array of product id},"name":"","emailId":"","mobileno":"","address":""}
+
+
+                 check your order :-
+
+				url : http://13.127.233.86/yourorders
+				pathvariable :{your emailId}
+
+
+ADMIN :-
+
+
+
+           create user :- who have access to add,activate,deactivate,delete product.
+
+				url : http://13.127.233.86/AddUser
+				body(raw,json) :  "{"email":"the@admin.com","name":"the","password":"the@123"n}"  
+
+
+			login in application to generate token :-
+
+					url :- http://13.127.233.86/loginuser/{username}/{password}
+					pathvariable : username and password
+
+			check token is expired or not :-
+				   url : http://13.127.233.86/checkAuth
+				   header : {"Authorization":token}
+
+			Add product in web-application :-
+
+				  url : http://13.127.233.86/AddyourProduct
+				  form data : category,subcategory,size,name,origprice,offerprice,longdescription,files
+				  header : {"Authorization":token}
+
+			edit product in web-application :-
+
+				  url : http://13.127.233.86/edityourProduct/{id}
+				  form data : category,subcategory,size,name,origprice,offerprice,longdescription,files
+				  whatever data you want to change place value against those fields,other fields leave empty.
+				  header : {"Authorization":token}
+
+
+			deactivate product to prevent view for users it stock end or any case :
+
+					http://13.127.233.86/deactiveyourproduct/{id}
+					pathvariable : product id
+					header : {"Authorization":token}
+
+			activate product  :
+
+					http://13.127.233.86/activateproduct/{id}
+					pathvariable : product id
+					header : {"Authorization":token}
+
+			delete product :-
+
+					http://13.127.233.86/deleteproduct/{id}
+					pathvariable : product id
+					header : {"Authorization":token}
+
+		
+		
+for any further clarification please feel free to contact me email : kundanthakur94@gmail.com
+
+
+		
+		

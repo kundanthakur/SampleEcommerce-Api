@@ -56,6 +56,14 @@ public class productController {
 		  List<Product> list=productService.getproductbyname(text, Integer.parseInt(pageid));
 		  return new ResponseEntity<>(list,HttpStatus.ACCEPTED);
 	}
+	
+	@GetMapping(value="/yourorders/{text}")
+	public ResponseEntity<?>searchtext(@PathVariable String text)
+	{
+		  List<String> list=productService.yourorders(text);
+		  return new ResponseEntity<>(list,HttpStatus.ACCEPTED);
+	}
+	
 	@PostMapping(value="/placeyourorders")
 	 public ResponseEntity<?> yourorders(@RequestBody ProductOrder productOrder){
 	    

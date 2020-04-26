@@ -27,6 +27,30 @@ public class ProductService {
 	@Autowired
 	ProductOrderRepo productOrderRepo;
 	
+	public List<String> yourorders(String emailId)
+	{
+		 List<String> list=new ArrayList<>();
+		 try
+		 {
+			 List<PlacedOrder> orderlist=productOrderRepo.findByEmailId(emailId);
+			 
+			 for(PlacedOrder order:orderlist)
+			 {
+				 Product product=productRepo.findById(order.getProductId());
+				 String info="name of the product : "+product.getName()+"Delivery Address:"+order.getAddress() +" Delivery Status :";
+				 if(order.isDelivered())
+					 info+="Delivered";
+				 else
+					 info+="On the way.";
+				 list.add(info);
+			 }
+			 
+		 }catch (Exception e) {
+			 list.add("can't find anything with this emailId");
+		}
+		return list;
+	}
+	
 	  public List<String> findandplaceorder(ProductOrder productOrder)
 	  {
 		  List<String> list=new ArrayList<>();
